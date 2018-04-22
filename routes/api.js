@@ -26,14 +26,17 @@ router.post('/subscription', function(req, res, next) {
 router.get('/subscriptions', function(req, res, next) {
 
 	var limit = 10;
-
-	console.log(req.query);
+	var page = 1;
 
 	if(req.query && req.query.limit) {
 		limit = parseInt(req.query.limit, 10);
 	}
 
-	SubscriptionModel.find({}).limit(limit).exec(function(err, subscriptions) {
+	if(req.query && req.query.page) {
+		page = parseInt(req.query.page, 10);
+	}
+
+	SubscriptionModel.find({}).skip((page - 1) * limit).limit(limit).exec(function(err, subscriptions) {
 		if(err) {
 			res.status(500).json({message: 'Something went wrong'});
 		}
