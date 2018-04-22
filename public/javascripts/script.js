@@ -5,6 +5,9 @@ var Subscriptions = function(){
 };
 
 Subscriptions.prototype.render = function(){
+	
+	$('#table-rows').empty();
+
 	this.subscriptions.forEach(function(item, index) {
 		$('#table-rows').append(
 			$('<tr/>').append(
@@ -42,6 +45,10 @@ Subscriptions.prototype.increasePage = function() {
 };
 
 Subscriptions.prototype.decreasePage = function() {
+	if(this.current_page === 1){
+		return;
+	}
+
 	this.current_page = this.current_page - 1;
 	this.fetch();
 };
@@ -61,4 +68,12 @@ Subscriptions.prototype.fetch = function() {
 $(document).ready(function(){
 	var SubscriptionsModel = new Subscriptions();
 	SubscriptionsModel.fetch();
+
+	$('#previous').on('click', function(){
+		SubscriptionsModel.decreasePage();
+	});
+
+	$('#next').on('click', function(){
+		SubscriptionsModel.increasePage();
+	});
 });
