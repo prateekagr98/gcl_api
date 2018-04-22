@@ -23,4 +23,25 @@ router.post('/subscription', function(req, res, next) {
 	});
 });
 
+router.get('/subscriptions', function(req, res, next) {
+
+	var limit = 10;
+
+	console.log(req.query);
+
+	if(req.query && req.query.limit) {
+		limit = parseInt(req.query.limit, 10);
+	}
+
+	SubscriptionModel.find({}).limit(limit).exec(function(err, subscriptions) {
+		if(err) {
+			res.status(500).json({message: 'Something went wrong'});
+		}
+
+		res.status(200).json({
+			subscriptions: subscriptions
+		});
+	});
+});
+
 module.exports = router;
