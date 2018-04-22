@@ -13,9 +13,7 @@ var app = express();
 
 // Here we find an appropriate database to connect to, defaulting to
 // localhost if we don't find one.
-var uristring = process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL ||
-  'mongodb://localhost:27017/gcl';
+var uristring = 'mongodb://heroku_dtrhb016:encgp2inp373bleucs13ibpeib@ds253879.mlab.com:53879/heroku_dtrhb016' || 'mongodb://localhost:27017/gcl';
 
 
 // Makes connection asynchronously.  Mongoose will queue up database
